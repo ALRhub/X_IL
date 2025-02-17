@@ -1,2 +1,2 @@
 # X_IL
-X-IL: Exploring the Design Space of Imitation Learning Policies
+The code is under cleaning and will be released soon.
