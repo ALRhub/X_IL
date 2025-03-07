@@ -1,0 +1,43 @@
+_target_: agents.models.flow_matching.rf.RF
+_recursive_: false
+
+ln: False
+device: ${device}
+
+backbones:
+  _target_: agents.backbones.encoder_decoder.Noise_EncDec
+  _recursive_: false
+  state_dim: ${latent_dim}
+  action_dim: ${action_dim}
+  goal_dim: ${goal_dim}
+  goal_conditioned: ${goal_conditioned}
+  goal_seq_len: 1
+  obs_seq_len: ${obs_tokens}
+  action_seq_len: ${act_seq_len}
+  embed_pdrob: 0
+  # Architecture details
+  embed_dim: ${n_embd}
+  device: ${device}
+  linear_output: true
+
+  use_ada_conditioning: False
+  forward_type: 'context_token'
+  diffusion_type: 'rf'
+
+  encoder:
+    _target_: agents.backbones.mamba.mamba.MixerModel
+    ssm_cfg: ${mamba_encoder_cfg}
+    d_model: ${n_embd}
+    n_layer: ${mamba_n_layer_encoder}
+    d_intermediate: ${n_embd}
+    device: ${device}
+    adaLN_zero: False
+
+  decoder:
+    _target_: agents.backbones.mamba.mamba.MixerModel
+    ssm_cfg: ${mamba_decoder_cfg}
+    d_model: ${n_embd}
+    n_layer: ${mamba_n_layer_decoder}
+    d_intermediate: ${n_embd}
+    device: ${device}
+    adaLN_zero: True

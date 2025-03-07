@@ -1,0 +1,28 @@
+_target_: agents.encoders.point_img_encoder.PointMLPResNetEncoder
+_recursive_: false
+
+point_mlp_encoder:
+  _target_: agents.encoders.point_attn_encoder.PointAttnEncoder
+  _recursive_: false
+
+  use_pc_color: ${use_pc_color}
+  out_channels: ${latent_dim}
+  n_layers: 4
+
+resnet_encoder:
+  _target_: agents.encoders.multi_image_obs_encoder.MultiImageObsEncoder
+  _recursive_: false
+
+  shape_meta: ${shape_meta}
+
+  rgb_model:
+    _target_: agents.encoders.pretrained_resnets.FiLMResNet18Policy
+    condition_dim: ${goal_dim}
+
+  resize_shape: null
+  #    crop_shape: [ 84, 84 ]
+  # constant center crop
+  random_crop: False
+  use_group_norm: True
+  share_rgb_model: False
+  imagenet_norm: True

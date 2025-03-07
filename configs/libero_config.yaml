@@ -1,0 +1,153 @@
+defaults:
+  - agents: bc_agent
+  - trainers: base_trainer
+
+agent_name: beso
+log_dir: logs/${task_suite}/
+
+# insert wandb here
+wandb:
+  entity: tiger_or_cat
+  project: fast_mail
+
+group: bc_${task_suite}
+
+hydra:
+  mode: MULTIRUN  # needed for launcher to be used
+  run:
+    dir: ${log_dir}/runs/${agent_name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  job:
+    chdir: True
+  sweep:
+    dir: ${log_dir}/sweeps/${agent_name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
+
+seed: 42
+
+# dataset config
+task_suite: libero_object
+traj_per_task: 10
+
+## change the path of dataset
+dataset_path: /home/david/2024/datasets/${task_suite}
+
+# Model Setting
+window_size: 10
+obs_seq_len: 1
+act_seq_len: ${window_size}
+multistep: ${window_size} # only for inference, could be different from act_seq_len
+goal_window_size: 1
+goal_conditioned: True
+
+num_sampling_steps: 4
+
+# obs_tokens: goal_window_size + obs_seq_len * len(obs_modalities)
+obs_tokens: 3
+
+# Training
+train_batch_size: 256
+val_batch_size: 32
+num_workers: 4
+device: 'cuda'
+epoch: 1
+eval_every_n_epochs: 1
+scale_data: True
+scaler_type: 'standard'
+
+if_use_ema: True
+
+## Environment
+obs_dim: 9
+action_dim: 7
+state_dim: 110
+max_len_data: 260
+
+## Observations
+if_robot_states: False
+
+camera_names:
+  - "agentview"
+  - "eye_in_hand"
+
+shape_meta:
+  # acceptable types: rgb, low_dim
+  obs:
+    agentview_image:
+      shape: [ 3, 128, 128 ]
+      type: rgb
+    eye_in_hand_image:
+      shape: [ 3, 128, 128 ]
+      type: rgb
+
+##########################################################################################
+# Common Parameters
+##########################################################################################
+n_embd: 256
+goal_dim: 512
+latent_dim: 256
+
+##########################################################################################
+# Transformer Parameters (encoder-decoder)
+##########################################################################################
+encoder_n_layer: 4
+decoder_n_layer: 6
+n_heads: 4
+
+##########################################################################################
+# Mamba Parameters
+##########################################################################################
+Mamba_type: Mamba1
+
+mamba_n_layer_encoder: 5
+mamba_encoder_cfg:
+  layer: ${Mamba_type}
+  d_state: 64
+  d_conv: 4
+  expand: 2
+
+mamba_n_layer_decoder: 10
+mamba_decoder_cfg:
+  layer: ${Mamba_type}
+  d_state: 64
+  d_conv: 4
+  expand: 2
+
+##########################################################################################
+# xLSTM Parameters
+##########################################################################################
+xlstm_encoder_blocks: 16
+xlstm_decoder_blocks: 16
+
+# Dataset
+trainset:
+  _target_: environments.dataset.libero_dataset.LiberoDataset
+  data_directory: ${dataset_path}
+  obs_dim: ${obs_dim}
+  action_dim: ${action_dim}
+  state_dim: ${state_dim}
+  max_len_data: ${max_len_data}
+  window_size: ${window_size}
+  traj_per_task: ${traj_per_task}
+
+valset:
+  _target_: environments.dataset.libero_dataset.LiberoDataset
+  data_directory: ${dataset_path}
+  obs_dim: ${obs_dim}
+  action_dim: ${action_dim}
+  state_dim: ${state_dim}
+  max_len_data: ${max_len_data}
+  window_size: ${window_size}
+  start_idx: 30
+
+simulation:
+  _target_: simulation.libero_sim.MultiTaskSim
+  _convert_: all
+  task_suite: ${task_suite}
+  use_eye_in_hand: False
+  seed: ${seed}
+  device: ${device}
+  render: False
+  n_cores: 2
+  num_episode: 20
+  max_step_per_episode: 600
+  use_multiprocessing: false

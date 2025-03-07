@@ -1,0 +1,9 @@
+python run.py  --config-name=libero_horeka_config \
+            --multirun agents=fm_agent \
+            agent_name=fm_mamba \
+            group=fm_decoder_only \
+            agents/model=fm/fm_dec_mamba \
+            task_suite=libero_object,libero_goal,libero_10,libero_spatial \
+            traj_per_task=10,50 \
+            scaler_type='minmax' \
+            seed=0,1,2

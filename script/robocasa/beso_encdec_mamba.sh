@@ -1,0 +1,10 @@
+python run_test.py  --config-name=robocasa_horeka_ablation_config \
+            --multirun agents=beso_agent \
+            agent_name=beso_mamba \
+            group=beso_encoder_decoder \
+            agents/model=beso/beso_encdec_mamba \
+            agents/obs_encoders=pretrained_resnet_film \
+            agents.if_film_condition=True \
+            mamba_n_layer_encoder=6,8 \
+            mamba_n_layer_decoder=6,8 \
+            seed=0,1,2

@@ -1,0 +1,7 @@
+_target_: agents.encoders.dino_img_encoder.DINOImgEncoder
+_recursive_: false
+
+model_name: "dinov2_vits14"
+freeze_backbone: True
+device: ${device}
+camera_names: ${camera_names}

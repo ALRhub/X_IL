@@ -1,0 +1,10 @@
+python run_test.py  --config-name=robocasa_horeka_config \
+            --multirun agents=ddpm_agent \
+            agent_name=ddpm_xlstm \
+            group=ddpm_decoder_only_benchmark \
+            agents/model=ddpm/ddpm_dec_xlstm \
+            agents/obs_encoders=pretrained_resnet_film \
+            agents.if_film_condition=True \
+            xlstm_encoder_blocks=8 \
+            num_sampling_steps=1,4,8,12,16 \
+            seed=0,1,2

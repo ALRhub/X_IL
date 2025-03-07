@@ -1,0 +1,12 @@
+python run_test.py  --config-name=robocasa_horeka_ablation_config \
+            --multirun agents=beso_agent \
+            agent_name=beso_xlstm \
+            group=beso_encoder_decoder \
+            agents/model=beso/beso_encdec_xlstm \
+            agents/obs_encoders=pretrained_resnet_film \
+            agents.if_film_condition=True \
+            xlstm_decoder_vocab_size=10 \
+            xlstm_decoder_adaLN_zero=True \
+            xlstm_encoder_blocks=6,8 \
+            xlstm_decoder_blocks=6,8 \
+            seed=0,1,2

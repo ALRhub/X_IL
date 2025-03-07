@@ -1,0 +1,10 @@
+python run.py  --config-name=libero_horeka_config \
+            --multirun agents=fm_agent \
+            agent_name=fm_transformer \
+            group=fm_encoder_decoder \
+            agents/model=fm/fm_encdec_transformer \
+            task_suite=libero_object,libero_goal,libero_10,libero_spatial \
+            traj_per_task=10,50 \
+            encoder_n_layer=4 \
+            decoder_n_layer=6 \
+            seed=0,1,2

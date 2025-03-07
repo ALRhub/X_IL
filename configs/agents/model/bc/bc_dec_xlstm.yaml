@@ -1,0 +1,29 @@
+_target_: agents.models.bc.bc.BC_Policy
+_recursive_: false
+
+backbones:
+  _target_: agents.backbones.decoder_only.Dec_only
+  _recursive_: false
+  state_dim: ${latent_dim}
+  action_dim: ${action_dim}
+  goal_dim: ${goal_dim}
+  device: ${device}
+  goal_conditioned: ${goal_conditioned}
+  embed_dim: ${n_embd}
+  embed_pdrob: 0
+  goal_seq_len: 1
+  obs_seq_len: ${obs_tokens}
+  action_seq_len: ${act_seq_len}
+  linear_output: true
+
+  encoder:
+    _target_: agents.backbones.xlstm.blocks.xLSTMBlockStack
+    embedding_dim: ${n_embd}
+    num_heads: 8
+    num_blocks: ${xlstm_encoder_blocks}
+    vocab_size: 13
+    chunkwise_kernel: "parallel--native_autograd"
+    mode: "train"
+    adaLN_zero: False
+
+device: ${device}

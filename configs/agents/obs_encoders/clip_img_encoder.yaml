@@ -1,0 +1,7 @@
+_target_: agents.encoders.clip_img_global_encoder.CLIPImgEncoder
+_recursive_: false
+
+model_name: "ViT-B/32"
+freeze_backbone: True
+device: ${device}
+camera_names: ${camera_names}

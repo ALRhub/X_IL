@@ -1,0 +1,24 @@
+_target_: agents.ddpm_agent.DDPM_Agent
+_recursive_: false
+
+defaults:
+  - model: ddpm/ddpm_dec_transformer
+  - obs_encoders: resnet
+  - language_encoders: clip
+
+optimization:
+  _target_: torch.optim.Adam
+  lr: 1e-4
+  weight_decay: 0
+
+obs_seq_len: ${obs_seq_len}
+act_seq_len: ${act_seq_len}
+
+cam_names: ${camera_names}
+
+if_robot_states: False
+if_film_condition: False
+device: ${device}
+state_dim: ${obs_dim}
+latent_dim: ${latent_dim}
+

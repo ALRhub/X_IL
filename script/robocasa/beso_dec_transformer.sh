@@ -1,0 +1,9 @@
+python run_test.py  --config-name=robocasa_horeka_config \
+            --multirun agents=beso_agent \
+            agent_name=beso_transformer \
+            group=beso_decoder_only_benchmark \
+            agents/model=beso/beso_dec_transformer \
+            agents/obs_encoders=pretrained_resnet_film \
+            agents.if_film_condition=True \
+            encoder_n_layer=6 \
+            seed=0,1,2

@@ -1,0 +1,10 @@
+python run_test.py  --config-name=robocasa_horeka_config \
+            --multirun agents=beso_agent \
+            agent_name=beso_xlstm \
+            group=beso_decoder_only_benchmark \
+            agents/model=beso/beso_dec_xlstm_rgbcasa \
+            agents/obs_encoders=pretrained_resnet_film \
+            agents.if_film_condition=True \
+            xlstm_encoder_blocks=8 \
+            num_sampling_steps=1,4,8,12,16 \
+            seed=0,1,2

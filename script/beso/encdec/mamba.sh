@@ -1,0 +1,10 @@
+python run.py  --config-name=libero_horeka_config \
+            --multirun agents=beso_agent \
+            agent_name=beso_mamba \
+            group=beso_encoder_decoder \
+            agents/model=beso/beso_encdec_mamba \
+            task_suite=libero_10,libero_spatial \
+            traj_per_task=10,50 \
+            mamba_n_layer_encoder=6,8 \
+            mamba_n_layer_decoder=6,8 \
+            seed=0,1,2

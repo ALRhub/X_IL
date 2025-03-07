@@ -1,0 +1,19 @@
+_target_: trainers.base_trainer.BaseTrainer
+_recursive_: false
+
+obs_seq_len: ${obs_seq_len}
+
+trainset: ${trainset}
+valset: ${valset}
+
+train_batch_size: ${train_batch_size}
+val_batch_size: ${val_batch_size}
+num_workers: ${num_workers}
+epoch: ${epoch}
+device: ${device}
+scale_data: ${scale_data}
+scaler_type: ${scaler_type}
+eval_every_n_epochs: ${eval_every_n_epochs}
+
+decay_ema: 0.995
+if_use_ema: ${if_use_ema}

@@ -1,0 +1,6 @@
+_target_: agents.encoders.siglip_encoder.SiglipVisionTower
+_recursive_: false
+
+vision_tower: ""
+args: ""
+delay_load: False

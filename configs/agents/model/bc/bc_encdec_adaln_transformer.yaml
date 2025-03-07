@@ -1,0 +1,43 @@
+_target_: agents.models.bc.bc.BC_Policy
+_recursive_: false
+
+backbones:
+  _target_: agents.backbones.encoder_decoder.EncDec
+  _recursive_: false
+  state_dim: ${latent_dim}
+  action_dim: ${action_dim}
+  goal_conditioned: ${goal_conditioned}
+  goal_seq_len: 1
+  obs_seq_len: ${obs_tokens}
+  action_seq_len: ${act_seq_len}
+  embed_pdrob: 0
+  # Architecture details
+  embed_dim: ${n_embd}
+  goal_dim: ${goal_dim}
+  device: ${device}
+  linear_output: true
+  forward_type: 'context_token'
+
+  encoder:
+    _target_: agents.backbones.transformer.blocks.TransformerEncoder
+    embed_dim: ${n_embd}
+    n_heads: ${n_heads}
+    n_layers: ${encoder_n_layer}
+    attn_pdrop: 0.3
+    resid_pdrop: 0.1
+    mlp_pdrop: 0.1
+    bias: False
+
+  decoder:
+    _target_: agents.backbones.transformer.blocks.TransformerFiLMDecoder
+    embed_dim: ${n_embd}
+    n_heads: ${n_heads}
+    n_layers: ${decoder_n_layer}
+    attn_pdrop: 0.3
+    resid_pdrop: 0.1
+    mlp_pdrop: 0.1
+    bias: False
+    use_cross_attention: False
+
+device: ${device}
+

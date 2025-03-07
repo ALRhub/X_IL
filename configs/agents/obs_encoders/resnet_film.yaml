@@ -1,0 +1,17 @@
+_target_: agents.mdt.models.perceptual_encoders.multi_image_obs_encoder.MultiImageObsEncoder
+_recursive_: false
+
+shape_meta: ${shape_meta}
+
+rgb_model:
+  _target_: agents.mdt.models.perceptual_encoders.film_resnets.ResNetEncoderWithFiLM
+  cond_dim: ${goal_dim}
+  latent_dim: ${latent_dim}
+
+resize_shape: null
+#    crop_shape: [ 84, 84 ]
+# constant center crop
+random_crop: False
+use_group_norm: True
+share_rgb_model: False
+imagenet_norm: True

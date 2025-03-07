@@ -1,0 +1,12 @@
+python run.py  --config-name=libero_horeka_config \
+            --multirun agents=beso_agent \
+            agent_name=beso_xlstm \
+            group=beso_decoder_only_best \
+            agents/model=beso/beso_dec_xlstm \
+            task_suite=libero_10 \
+            traj_per_task=10,50 \
+            agents/obs_encoders=pretrained_resnet_film \
+            agents.if_film_condition=True \
+            xlstm_encoder_blocks=8 \
+            n_embd=256,512 \
+            seed=0,1,2
