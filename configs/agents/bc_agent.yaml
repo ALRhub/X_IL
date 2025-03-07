@@ -4,7 +4,7 @@ _recursive_: false
 defaults:
   - model: bc/bc_dec_transformer
 #  - model: bc/bc_xlstm
-  - obs_encoders: dinov2
+  - obs_encoders: resnet
   - language_encoders: clip
 
 optimization:

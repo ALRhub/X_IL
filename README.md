@@ -15,7 +15,7 @@ The framework's modular design enables seamless swapping of policy components, s
 This flexibility facilitates comprehensive experimentation and has led to the discovery of novel policy configurations
 
 ## News
-- **09/03/2025:** Initial release of X-IL.
+- **07/03/2025:** Initial release of X-IL.
 
 ---
 ## TODO

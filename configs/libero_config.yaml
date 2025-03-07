@@ -39,22 +39,22 @@ multistep: ${window_size} # only for inference, could be different from act_seq_
 goal_window_size: 1
 goal_conditioned: True
 
+use_pos_emb: True
 num_sampling_steps: 4
+if_use_ema: True
 
-# obs_tokens: goal_window_size + obs_seq_len * len(obs_modalities)
-obs_tokens: 3
+# obs_tokens: obs_seq_len * len(obs_modalities)
+obs_tokens: 2
 
 # Training
 train_batch_size: 256
 val_batch_size: 32
 num_workers: 4
 device: 'cuda'
-epoch: 1
+epoch: 100
 eval_every_n_epochs: 1
 scale_data: True
-scaler_type: 'standard'
-
-if_use_ema: True
+scaler_type: 'minmax'
 
 ## Environment
 obs_dim: 9
@@ -95,6 +95,7 @@ n_heads: 4
 
 ##########################################################################################
 # Mamba Parameters
+# Mamba_type support Mamba1, Mamba2
 ##########################################################################################
 Mamba_type: Mamba1
 
@@ -115,8 +116,19 @@ mamba_decoder_cfg:
 ##########################################################################################
 # xLSTM Parameters
 ##########################################################################################
-xlstm_encoder_blocks: 16
-xlstm_decoder_blocks: 16
+xlstm_encoder_blocks: 4
+xlstm_encoder_vocab_size: 14
+xlstm_encoder_chunkwise_kernel: "parallel--native_autograd"
+xlstm_encoder_mode: "train"
+xlstm_encoder_adaLN_zero: False
+xlstm_encoder_in_context_cond: False
+
+xlstm_decoder_blocks: 8
+xlstm_decoder_vocab_size: 10
+xlstm_decoder_chunkwise_kernel: "parallel--native_autograd"
+xlstm_decoder_mode: "train"
+xlstm_decoder_adaLN_zero: True
+xlstm_decoder_in_context_cond: False
 
 # Dataset
 trainset:
